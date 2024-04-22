@@ -1,5 +1,6 @@
 import { Router } from "express";
 import Blog from "../models/blog.model.js";
+import multer from "../middleware/multer.js";
 
 export const blogsRoute = Router();
 
@@ -59,5 +60,20 @@ blogsRoute.delete("/blogPosts/:_id", async (req, res, next) => {
     res.send("Blog deleted successfully");
   } catch (error) {
     next(error);
+  }
+});
+
+// Patch blog cover
+blogsRoute.patch("/blogPosts/:_id/cover", multer, async (req, res, next) => {
+  try {
+    const blogId = req.params._id;
+    let updatedBlog = await Blog.findByIdAndUpdate(
+      blogId,
+      { avatar: req.file.path },
+      { new: true }
+    );
+    res.send(updatedBlog);
+  } catch (error) {
+    console.log(error);
   }
 });

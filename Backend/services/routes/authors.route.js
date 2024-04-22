@@ -1,5 +1,6 @@
 import { Router } from "express";
 import Author from "../models/author.model.js";
+import multer from "../middleware/multer.js";
 
 export const authorsRoute = Router();
 
@@ -52,5 +53,21 @@ authorsRoute.delete("/authors/:_id", async (req, res, next) => {
     res.send("Author deleted successfully").status(200);
   } catch (error) {
     next(error);
+  }
+});
+
+// patch avatar
+
+authorsRoute.patch("/authors/:_id/avatar", multer, async (req, res, next) => {
+  try {
+    const authorId = req.params._id;
+    let updatedAuthor = await Author.findByIdAndUpdate(
+      authorId,
+      { avatar: req.file.path },
+      { new: true }
+    );
+    res.send(updatedAuthor);
+  } catch (error) {
+    console.log(error);
   }
 });
