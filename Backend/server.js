@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import mongoose from "mongoose";
 import { authorsRoute } from "./services/routes/authors.route.js";
 import { blogsRoute } from "./services/routes/blogs.route.js";
+import { commentsRoute } from "./services/routes/comments.route.js";
 import cors from "cors";
 import nodemailer from "nodemailer";
 
@@ -18,6 +19,7 @@ app.use(cors());
 // Routing
 app.use("/", authorsRoute);
 app.use("/", blogsRoute);
+app.use("/", commentsRoute);
 
 const intiServer = async () => {
   try {

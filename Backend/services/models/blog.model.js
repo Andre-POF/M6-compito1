@@ -38,6 +38,12 @@ const blogSchema = new Schema(
       type: String,
       required: true,
     },
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
   },
   {
     collection: "blogs",
