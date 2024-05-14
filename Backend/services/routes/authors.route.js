@@ -1,6 +1,8 @@
 import { Router } from "express";
 import Author from "../models/author.model.js";
+import User from "../models/user.model.js";
 import multer from "../middleware/multer.js";
+import bcrypt from "bcryptjs";
 
 export const authorsRoute = Router();
 
@@ -21,7 +23,10 @@ authorsRoute.get("/authors/:_id", async (req, res, next) => {
 // post author
 authorsRoute.post("/authors", async (req, res, next) => {
   try {
-    let author = await Author.create(req.body);
+    let author = await User.create({
+      ...req.body,
+      password: await bcrypt.hash(req.body.password, 10),
+    });
     res.send(author).status(400);
   } catch (error) {
     next(error);

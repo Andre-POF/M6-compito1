@@ -4,7 +4,7 @@ const blogSchema = new Schema(
   {
     category: {
       type: String,
-      required: true,
+      required: false,
     },
     title: {
       type: String,
@@ -17,21 +17,21 @@ const blogSchema = new Schema(
     readTime: {
       value: {
         type: Number,
-        required: true,
+        required: false,
       },
       unit: {
         type: String,
-        required: true,
+        required: false,
       },
     },
     author: {
       name: {
         type: String,
-        required: true,
+        required: false,
       },
       avatar: {
         type: String,
-        required: true,
+        required: false,
       },
     },
     content: {

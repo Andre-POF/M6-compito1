@@ -1,25 +1,29 @@
-import express from "express";
-import { config } from "dotenv";
-import mongoose from "mongoose";
 import { authorsRoute } from "./services/routes/authors.route.js";
 import { blogsRoute } from "./services/routes/blogs.route.js";
 import { commentsRoute } from "./services/routes/comments.route.js";
+import { userRoute } from "./services/routes/users.route.js";
+import { config } from "dotenv";
+import express from "express";
+import mongoose from "mongoose";
 import cors from "cors";
 import nodemailer from "nodemailer";
+import passport from "passport";
+import googleStrategy from "./services/auth/passport.js";
+import { googleUserRoute } from "./services/routes/googleUser.route.js";
 
 config();
 const PORT = process.env.PORT || "3001";
-
 const app = express();
-
 app.use(express.json());
-
 app.use(cors());
+passport.use("google", googleStrategy);
 
 // Routing
+app.use("/googleuser", googleUserRoute);
 app.use("/", authorsRoute);
 app.use("/", blogsRoute);
 app.use("/", commentsRoute);
+app.use("/", userRoute);
 
 const intiServer = async () => {
   try {
